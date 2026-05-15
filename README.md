@@ -1,6 +1,6 @@
 # WebAudit — Comprehensive Website Auditing Tool
 
-**WebAudit** is a desktop application for full-site auditing. It maps every URL on a domain and analyzes them for cybersecurity, SEO, performance, and active pentesting. Designed for personal and professional use.
+**WebAudit** is a desktop application for full-site auditing. It maps every URL on a domain and analyzes them for cybersecurity, SEO, performance, active pentesting, and generates professional PDF reports.
 
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.12+-blue" alt="Python">
@@ -76,6 +76,12 @@
 - **Performance**: Response time, page size
 - **0-100 Scoring** per page with detailed analysis
 
+### 📊 Reporting & Export
+- **Dashboard**: Consolidated Security + SEO scores with severity breakdowns
+- **PDF Export**: Professional audit report with cover page, score summary, findings by severity, actionable recommendations, and methodology section
+- **JSON Export**: Full structured data export with all scan checks for integration with other tools
+- **Project Summary**: URLs mapped, crawled, check counts, scan status
+
 ---
 
 ## Architecture
@@ -95,6 +101,7 @@
 │  │ Module 2: Security Scanner              │ │
 │  │ Module 3: SEO Analyzer                  │ │
 │  │ Module 4: Active Pentesting             │ │
+│  │ Module 5: Reporting & Export            │ │
 │  └─────────────────────────────────────────┘ │
 │  - SQLAlchemy + aiosqlite (SQLite)           │
 │  - Async crawling with httpx                 │
@@ -253,11 +260,14 @@ web-audit/
 │       │   └── scanner.py       # Active pentest scanner
 │       ├── seo/
 │       │   └── scanner.py       # SEO analyzer
+│       ├── reports/
+│       │   └── generator.py     # PDF & JSON report generator
 │       └── api/
 │           ├── projects.py      # Project CRUD
 │           ├── crawl.py         # Crawl control + WebSocket
 │           ├── security.py      # Security scan endpoints
-│           └── seo.py           # SEO scan endpoints
+│           ├── seo.py           # SEO scan endpoints
+│           └── reports.py       # Dashboard & export endpoints
 └── desktop/
     ├── package.json
     ├── vite.config.ts
@@ -277,7 +287,8 @@ web-audit/
             │   ├── UrlTable.tsx       # URL table with filters
             │   ├── CrawlProgress.tsx  # Live progress bar
             │   ├── SecurityPanel.tsx  # Security findings
-            │   └── SeoPanel.tsx       # SEO findings
+            │   ├── SeoPanel.tsx       # SEO findings
+            │   └── DashboardPanel.tsx # Dashboard + export
             └── lib/
                 └── api.ts             # API client + types
 ```
@@ -319,6 +330,13 @@ web-audit/
 | GET | `/api/projects/:id/seo/scan` | Latest analysis |
 | GET | `/api/projects/:id/seo/checks` | Findings (filterable, paginated) |
 | GET | `/api/projects/:id/seo/summary` | Summary + scoring |
+
+### Reports & Export
+| Method | Route | Description |
+|---|---|---|
+| GET | `/api/projects/:id/dashboard` | Consolidated dashboard (security + SEO scores) |
+| GET | `/api/projects/:id/export/json` | Full structured JSON export (all checks) |
+| GET | `/api/projects/:id/export/pdf` | Professional PDF audit report |
 
 ---
 
@@ -369,7 +387,10 @@ Unauthorized use of this tool against third-party sites may violate local and in
 - [x] Module 2: Security Scanner
 - [x] Module 3: SEO Analyzer
 - [x] Module 4: Active Pentesting
-- [x] Module 5: Reporting & Export (PDF, dashboards)
+- [x] Module 5: Reporting & Export (PDF, JSON, Dashboard)
+- [ ] Installable packaging (Windows, macOS, Linux)
+- [ ] Audit history and comparisons
+- [ ] Known CVE detection
 
 
 ---
