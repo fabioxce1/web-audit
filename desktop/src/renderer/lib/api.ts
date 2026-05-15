@@ -292,6 +292,18 @@ export const api = {
   getSeoSummary: (projectId: number) =>
     request<SeoSummary>(`/projects/${projectId}/seo/summary`),
 
+  exportJson: async (projectId: number) => {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/export/json`);
+    if (!res.ok) throw new Error('Export failed');
+    return res.blob();
+  },
+
+  exportPdf: async (projectId: number) => {
+    const res = await fetch(`${BASE_URL}/projects/${projectId}/export/pdf`);
+    if (!res.ok) throw new Error('Export failed');
+    return res.blob();
+  },
+
   connectWebSocket: (projectId: number, onMessage: (data: unknown) => void, onError?: (e: Event) => void) => {
     const ws = new WebSocket(`${WS_BASE_URL}/projects/ws/${projectId}/crawl`);
 

@@ -5,6 +5,7 @@ import CrawlProgress from '../components/CrawlProgress';
 import UrlTable from '../components/UrlTable';
 import SecurityPanel from '../components/SecurityPanel';
 import SeoPanel from '../components/SeoPanel';
+import DashboardPanel from '../components/DashboardPanel';
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
@@ -23,7 +24,7 @@ export default function ProjectDetail() {
   const [crawling, setCrawling] = useState(false);
   const [startingCrawl, setStartingCrawl] = useState(false);
   const [filter, setFilter] = useState<'all' | 'ok' | 'broken'>('all');
-  const [activeTab, setActiveTab] = useState<'urls' | 'security' | 'seo'>('urls');
+  const [activeTab, setActiveTab] = useState<'urls' | 'security' | 'seo' | 'dashboard'>('urls');
 
   useEffect(() => {
     if (!id || isNaN(projectId)) {
@@ -232,6 +233,12 @@ export default function ProjectDetail() {
         >
           SEO
         </button>
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${activeTab === 'dashboard' ? 'bg-blue-900/50 text-blue-300' : 'text-gray-500 hover:text-gray-300 hover:bg-gray-800'}`}
+        >
+          Dashboard
+        </button>
       </div>
 
       {activeTab === 'urls' && (
@@ -255,6 +262,10 @@ export default function ProjectDetail() {
 
       {activeTab === 'seo' && (
         <SeoPanel projectId={projectId} />
+      )}
+
+      {activeTab === 'dashboard' && (
+        <DashboardPanel projectId={projectId} />
       )}
     </div>
   );

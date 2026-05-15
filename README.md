@@ -353,13 +353,11 @@ Unauthorized use of this tool against third-party sites may violate local and in
 - [x] Module 2: Security Scanner
 - [x] Module 3: SEO Analyzer
 - [x] Module 4: Active Pentesting
-- [ ] Module 5: Reporting & Export (PDF, dashboards)
-- [ ] Installable packaging (Windows, macOS, Linux)
-- [ ] Audit history and comparisons
-- [ ] Known CVE detection
+- [x] Module 5: Reporting & Export (PDF, dashboards)
+
 
 ---
 
 ## License
 
-MIT License. See `LICENSE` file for details.
+MIT License.
