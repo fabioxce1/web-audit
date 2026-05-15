@@ -124,9 +124,11 @@ cd web-audit
 
 ```bash
 cd backend
+
+# Create and activate virtual environment
 python3 -m venv venv
-source venv/bin/activate  # Linux/macOS
-# venv\Scripts\activate   # Windows
+source venv/bin/activate   # macOS / Linux
+# venv\Scripts\activate    # Windows
 
 pip install -r requirements.txt
 pip install 'uvicorn[standard]'
@@ -135,6 +137,8 @@ pip install 'uvicorn[standard]'
 pip install playwright
 playwright install chromium
 ```
+
+> **Windows users:** use `python` instead of `python3`, and `venv\Scripts\activate` instead of `source venv/bin/activate`.
 
 ### 3. Frontend (Electron + React)
 
@@ -177,12 +181,24 @@ In the project detail view, click "Start Crawling". The BFS engine will traverse
 
 ### 3. Analyze Results
 Once crawling is complete:
-- **URLs Tab**: Table with all URLs, status filters, broken/OK toggles
-- **Security Tab**: Click "Start Security Scan" for a full security assessment
-- **SEO Tab**: Click "Start SEO Analysis" for optimization audit
+
+| Tab | What it does |
+|---|---|
+| **URLs** | Table with all URLs, status filters, broken/OK toggles, external links |
+| **Security** | Click "Start Security Scan" — analyzes headers, SSL, cookies, WAF, CORS, ports, pentesting |
+| **SEO** | Click "Start SEO Analysis" — audits meta tags, headings, images, content, performance |
+| **Dashboard** | Combined Security + SEO scores, project summary, PDF/JSON export |
 
 ### 4. View URL Tree
 Click "View Tree" to visualize the site's hierarchical structure with status indicators.
+
+### Troubleshooting
+
+| Issue | macOS / Linux | Windows |
+|---|---|---|
+| Port 8000 already in use | `lsof -ti :8000 \| xargs kill -9` | `netstat -ano \| findstr :8000` then `taskkill /PID <PID> /F` |
+| Python not found | Use `python3` or `python3.12` | Use `python` or `py -3` |
+| Playwright not found | `pip install playwright && playwright install chromium` | Same (use `pip` or `pip3`) |
 
 ---
 
